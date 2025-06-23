@@ -1,17 +1,22 @@
-function addTask(event) {
-    event.preventDefault();
-    const input = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-    if (input.value.trim() !== "") {
-        const newTask = document.createElement("li");
-        newTask.textContent = input.value;
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.onclick = function () {
-            taskList.removeChild(newTask);
-        };
-        newTask.appendChild(deleteButton);
-        taskList.appendChild(newTask);
-        input.value = "";
+function press(value) {
+    const display = document.getElementById("display");
+    display.value += value;
+}
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+}
+
+function calculate() {
+    const display = document.getElementById("display");
+    display.value = eval(display.value);
+}
+
+function calculate() {
+    const display = document.getElementById("display");
+    try {
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = "Error";
     }
 }

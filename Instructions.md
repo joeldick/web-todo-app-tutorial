@@ -1,8 +1,8 @@
-# Building a To-Do App with Flask and JavaScript
+# Building a Calculator App with Flask and JavaScript
 
 ## Introduction
 
-In this tutorial, you will create a simple web-based To-Do app using **Python Flask**, **HTML**, and **JavaScript**. Each step introduces a new feature or concept, gradually building up your skills.
+In this tutorial, you will create a simple web-based Calculator app using **Python Flask**, **HTML**, and **JavaScript**. Each step introduces a new feature or concept, gradually building up your skills.
 
 ---
 
@@ -18,26 +18,26 @@ You will create a basic project structure and use Flask to serve a simple web pa
 
 ```powershell
 # Navigate to the directory where you want to create the project
-cd "\\YESHIVANAS\home\flast\"
+cd "\YESHIVANAS\home\flast\"
 # Create the main project directory
-mkdir web_todo_app
+mkdir web_calculator_app
 # Navigate into the project directory
-cd web_todo_app
+cd web_calculator_app
 # Create the static and templates subdirectories
 mkdir static, templates
 # Create the app.py file
 New-Item -Path app.py -ItemType File
 ```
-   
+
 ```plaintext
-todo_app/
+web_calculator_app/
 ├── static/
 ├── templates/
 └── app.py
 ```
 
-2. Open your text editor or IDE and create a file called `app.py`. Paste the following code into it:  
-   
+2. Open your text editor or IDE and create a file called `app.py`. Paste the following code into it:
+
 ```python
 from flask import Flask, render_template
 
@@ -51,123 +51,136 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
-3. In the `templates/` folder, create a file called `index.html` and add this code:  
-   
+3. In the `templates/` folder, create a file called `index.html` and add this code:
+
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To-Do App</title>
+    <title>Calculator App</title>
 </head>
 <body>
-    <h1>My To-Do List</h1>
+    <h1>Simple Calculator</h1>
 </body>
 </html>
 ```
 
-4. Run the Flask app:  
-     
-   - Open a terminal and navigate to the `todo_app` folder.  
-   - Run the command:  
-       
-     `python app.py`  
-       
+4. Run the Flask app:
+
+   - Open a terminal and navigate to the `web_calculator_app` folder.
+   - Run the command:
+
+     `python app.py`
+
    - Open your browser and go to `http://127.0.0.1:5000/`. You should see the title and heading.
 
 ---
 
-## Class 2: Adding an Input Field
+## Class 2: Creating the Calculator Layout
 
 ### Objective
 
-You will add an input field for entering new tasks.
+You will add an input field and some buttons for digits and operations.
 
 ### Instructions
 
-1. Open the `index.html` file and update it with an input box and a button. The `onclick` attribute directly links the button's click event to the `addTask()` JavaScript function.
-   
+Update the `index.html` file to include a calculator display and buttons:
+
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>To-Do App</title>
-</head>
 <body>
-    <h1>My To-Do List</h1>
-    <input type="text" id="taskInput" placeholder="Enter a new task">
-    <button onclick="addTask()">Add Task</button>
-    <ul id="taskList"></ul>
+    <h1>Simple Calculator</h1>
+    <input type="text" id="display" readonly>
+    <div>
+        <button onclick="press('1')">1</button>
+        <button onclick="press('2')">2</button>
+        <button onclick="press('3')">3</button>
+        <button onclick="press('+')">+</button>
+    </div>
     <script>
-        function addTask() {
-            alert("This button will add a task later!");
-        }  
+        function press(value) {
+            alert("Button pressed: " + value);
+        }
     </script>
 </body>
-</html>
 ```
 
-2. Save the file and reload your browser.  
-     
-   - The input field and button should appear.  
-   - Clicking the button will show an alert message.
+Reload the browser and test clicking the buttons. You should see an alert with the button value.
 
 ---
 
-## Class 3: Adding a hardcoded To-Do List
+## Class 3: Displaying Button Input
 
 ### Objective
 
-You will manually add some tasks to the `<ul>` element in your HTML. This will show how lists are structured in HTML and allow you to visualize the static list on your webpage.
+You will display the button value inside the input field instead of showing an alert.
 
 ### Instructions
 
-1. Open the `index.html` file and update the `<ul>` element with hardcoded `<li>` items:  
-   
-```html
-<ul id="taskList">
-    <li>Buy groceries</li>
-    <li>Clean the house</li>
-    <li>Finish homework</li>
-</ul>
-```
+Update the `press()` function in your `<script>`:
 
-2. Save the file and reload your browser.  
-     
-   - You should see the three hardcoded tasks displayed as a bulleted list.  
-       
-3. Open your browser’s **Developer Tools → Elements tab** and observe the hardcoded `<li>` element added to the `<ul>`.
-
----
-
-## Class 4: Adding Tasks to the List
-
-### Objective
-
-You will write JavaScript to add new tasks to the list dynamically.
-
-### Instructions
-
-1. Add the following `addTask` function inside the `<script>` tag in your HTML file:  
-   
 ```html
 <script>
-    function addTask() {
-        const input = document.getElementById("taskInput"); 
-        const taskList = document.getElementById("taskList");
-        if (input.value.trim() !== "") {
-            const newTask = document.createElement("li");
-            newTask.textContent = input.value;
-            taskList.appendChild(newTask);
-            input.value = "";
-        }
+    function press(value) {
+        const display = document.getElementById("display");
+        display.value += value;
     }
 </script>
 ```
 
-2. Save the file and reload your browser.  
-     
-   - Enter a task in the input field and click "Add Task".  
-   - Open your browser’s **Developer Tools → Elements tab** and observe the new `<li>` element added to the `<ul>`.
+Now clicking a button should update the input field.
+
+---
+
+## Class 4: Adding More Buttons
+
+### Objective
+
+You will add more buttons to complete the calculator interface.
+
+### Instructions
+
+Add buttons for all digits, operators, and an equals and clear button:
+
+```html
+<div>
+    <button onclick="press('4')">4</button>
+    <button onclick="press('5')">5</button>
+    <button onclick="press('6')">6</button>
+    <button onclick="press('-')">-</button>
+</div>
+<div>
+    <button onclick="press('7')">7</button>
+    <button onclick="press('8')">8</button>
+    <button onclick="press('9')">9</button>
+    <button onclick="press('*')">*</button>
+</div>
+<div>
+    <button onclick="press('0')">0</button>
+    <button onclick="press('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="clearDisplay()">C</button>
+</div>
+```
+
+And update the JavaScript functions:
+
+```html
+<script>
+    function press(value) {
+        const display = document.getElementById("display");
+        display.value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    function calculate() {
+        const display = document.getElementById("display");
+        display.value = eval(display.value);
+    }
+</script>
+```
 
 ---
 
@@ -175,118 +188,253 @@ You will write JavaScript to add new tasks to the list dynamically.
 
 ### Objective
 
-You will move your JavaScript code to an external file for better organization. The separation of JavaScript into a dedicated file makes the code easier to manage and reuse, especially as your app grows in complexity.
+You will move your JavaScript code to a file for better organization.
 
 ### Instructions
 
-1. Create a new file in the `static/` folder called `script.js`. Add the following code (cut and paste from the `index.html` file):  
-   
+1. Create a file called `script.js` in the `static/` folder:
+
 ```javascript
-function addTask() {
-    const input = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-    if (input.value.trim() !== "") {
-        const newTask = document.createElement("li");
-        newTask.textContent = input.value;
-        taskList.appendChild(newTask);
-        input.value = "";
-    }
+function press(value) {
+    const display = document.getElementById("display");
+    display.value += value;
+}
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+}
+
+function calculate() {
+    const display = document.getElementById("display");
+    display.value = eval(display.value);
 }
 ```
 
-2. Update the `script` element in your `index.html` file to link to this external script:  
-   
+2. Link it in `index.html` before the closing `</body>` tag:
+
 ```html
 <script src="/static/script.js"></script>
 ```
 
-3. Save the files and reload your browser.  
-     
-   - Confirm that the functionality remains the same.
+Reload your browser and test again. Everything should still work.
 
 ---
 
-## Class 6: Using a Form to Submit Tasks
+## Class 6: Preventing Invalid Input
 
 ### Objective
 
-You will replace the button with a form and submit tasks using `onsubmit`.
+You will add error handling to avoid calculator crashes.
 
 ### Instructions
 
-1. Update your `index.html` file to put the input field and button in a form:  
-   
+Update the `calculate()` function in `script.js` to handle invalid expressions:
+
+```javascript
+function calculate() {
+    const display = document.getElementById("display");
+    try {
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = "Error";
+    }
+}
+```
+
+Now the app will display "Error" if the input cannot be evaluated.
+
+---
+
+## Class 7: Applying Inline Styles for Layout
+
+### Objective
+
+You will apply inline styles directly to HTML elements to improve the layout and appearance of the calculator.
+
+### Instructions
+
+Update your `index.html` file as follows to style the calculator using inline styles:
+
 ```html
-<form id="taskForm" onsubmit="addTask(event)">
-    <input type="text" id="taskInput" placeholder="Enter a new task">
-    <button type="submit">Add Task</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator App</title>
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4;">
+    <div style="text-align: center;">
+        <h1 style="font-size: 36px;">Simple Calculator</h1>
+        <input type="text" id="display" readonly style="width: 240px; height: 40px; font-size: 20px; margin-bottom: 10px;"><br>
+        <div>
+            <button onclick="press('1')" style="width: 60px; height: 40px;">1</button>
+            <button onclick="press('2')" style="width: 60px; height: 40px;">2</button>
+            <button onclick="press('3')" style="width: 60px; height: 40px;">3</button>
+            <button onclick="press('+')" style="width: 60px; height: 40px;">+</button>
+            <br>
+            <button onclick="press('4')" style="width: 60px; height: 40px;">4</button>
+            <button onclick="press('5')" style="width: 60px; height: 40px;">5</button>
+            <button onclick="press('6')" style="width: 60px; height: 40px;">6</button>
+            <button onclick="press('-')" style="width: 60px; height: 40px;">-</button>
+            <br>
+            <button onclick="press('7')" style="width: 60px; height: 40px;">7</button>
+            <button onclick="press('8')" style="width: 60px; height: 40px;">8</button>
+            <button onclick="press('9')" style="width: 60px; height: 40px;">9</button>
+            <button onclick="press('*')" style="width: 60px; height: 40px;">*</button>
+            <br>
+            <button onclick="press('0')" style="width: 60px; height: 40px;">0</button>
+            <button onclick="press('.') " style="width: 60px; height: 40px;">.</button>
+            <button onclick="calculate()" style="width: 60px; height: 40px;">=</button>
+            <button onclick="clearDisplay()" style="width: 60px; height: 40px;">C</button>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
 ```
-
-2. Update your `script.js` file by adding `event.preventDefault()`. This stops the form from refreshing the page or navigating to the form's `action` URL, allowing the JavaScript function to handle the input instead.:  
-   
-```javascript
-function addTask(event) {
-    event.preventDefault();
-    const input = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-    if (input.value.trim() !== "") {
-        const newTask = document.createElement("li");
-        newTask.textContent = input.value;
-        taskList.appendChild(newTask);
-        input.value = "";
-    }
-}
-```
-
-3. Save the files and test:  
-     
-   - Enter a task in the input field and press Enter or click "Add Task".  
-   - Observe the new task added to the list.
 
 ---
 
-## Class 7: Adding a Delete Button
+## Class 8: Moving Styles to a `<style>` Tag
 
 ### Objective
 
-You will add a "Delete" button to each task to remove it from the list.
+You will move the inline styles into a `<style>` block in the `<head>` section for better organization.
 
 ### Instructions
 
-1. Update your `script.js` file. This update makes `addTask()` dynamically add a `<li>` item and attach a Delete button to each task. The Delete button includes a function to remove the task when clicked.  
-   
-```javascript
-function addTask(event) {
-    event.preventDefault();
-    const input = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-    if (input.value.trim() !== "") {
-        const newTask = document.createElement("li");
-        newTask.textContent = input.value;
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.onclick = function () {
-            taskList.removeChild(newTask);
-        };
-        newTask.appendChild(deleteButton);
-        taskList.appendChild(newTask);
-        input.value = "";
-    }
-}
+1. Replace the inline styles in `index.html` with a `<style>` block like this:
+
+```html
+<head>
+    <title>Calculator App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+        }
+        #display {
+            width: 240px;
+            height: 40px;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 60px;
+            height: 40px;
+            margin: 2px;
+        }
+    </style>
+</head>
 ```
 
-2. Save the files and test:  
-     
-   - Add a task, then click the "Delete" button to remove it.  
-   - Open **Developer Tools → Elements tab** to see how the `<li>` is removed.
+2. Then update your HTML elements to use the `class` names and IDs as shown above.
 
 ---
 
-## Next Steps
+## Class 9: Moving Styles to a CSS File
 
-You now have a working To-Do app with basic functionality! In the next steps, you can:
+### Objective
 
-1. Use Flask to store tasks in a JSON file.  
-2. Fetch tasks dynamically when the page loads.  
-3. Add styles using CSS.
+You will move the styles into an external CSS file for cleaner structure and reusability.
+
+### Instructions
+
+1. Create a file called `style.css` in the `static/` folder with the following content:
+
+```css
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+.container {
+    text-align: center;
+}
+#display {
+    width: 240px;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+button {
+    width: 60px;
+    height: 40px;
+    margin: 2px;
+}
+```
+
+2. Link this file in your `index.html` using the `<link>` tag:
+
+```html
+<head>
+    <title>Calculator App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+```
+
+---
+
+## Class 10: Final Styling Improvements
+
+### Objective
+
+You will apply final polish to make the calculator look like a proper app.
+
+### Instructions
+
+1. Update your `style.css` file with the following enhancements:
+
+```css
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    font-family: Arial, sans-serif;
+}
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+#display {
+    width: 260px;
+    height: 50px;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: right;
+    padding-right: 10px;
+}
+button {
+    width: 60px;
+    height: 50px;
+    font-size: 18px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #61dafb;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+button:hover {
+    background-color: #21a1f1;
+}
+```
+
+Now your calculator looks and feels more like a real app!
+
+Here are some ideas for additional features:
+
+1. Add keyboard support using `keydown` events.
+2. Store previous calculations in a history list.
