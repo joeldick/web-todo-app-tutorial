@@ -1,1 +1,1 @@
-Check out instruction.md for the step-by-step tutorial
+Check out Instruction.md for the step-by-step tutorial
